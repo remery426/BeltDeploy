@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Appointment</title>
+  </head>
+  <body>
+    {% if messages %}
+      {% for message in messages %}
+    <h4> {{message}}</h4>
+      {% endfor %}
+    {% endif %}
+    <a href="belt_app/logout">Logout</a><a href="/belt_app">Home</a>
+    <form class="" action="belt_app/edit/{{request.session.edit_id}}" method="post">
+      {% csrf_token %}
+      <ul>
+        <li>Edit Task:<input type="text" name="new_task" value="{{apt.task}}"></li>
+        <li>Edit status:<select class="" name="new_status"></li>
+          <option value="Pending">Pending</option>
+          <option value="Missed">Missed</option>
+          <option value="Done">Done</option>
+        </select>
+        <li>Edit Date:<input type="date" name="new_date"> </li>
+        <li>Edit Time:<input type="time" name = "new_time" ></li>
+
+      </ul>
+      <input type="submit" name="submit" value="Edit">
+    </form>
+  </body>
+</html>

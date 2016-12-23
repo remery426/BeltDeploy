@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>What's up</title>
+  </head>
+  <body>
+    {% if messages %}
+      {% for message in messages %}
+    <h4> {{message}}</h4>
+      {% endfor %}
+    {% endif %}
+    <a href="belt_app/logout">Logout</a>
+    <h1> Hello {{request.session.thisuser}}!</h1>
+    <h3> Here are your appointments for today {{Current_time}} </h3>
+    <table>
+      <tr>
+        <th> Task </th>
+        <th>Time</th>
+        <th> Status</th>
+        <th> Action </th>
+      </tr>
+      {% for apt in today %}
+      <tr>
+        <th>{{apt.task}}</th>
+        <th>{{apt.time}}</th>
+        <th>{{apt.status}}</th>
+        {% if apt.status != "Done" %}
+        <th>    <a href="belt_app/delete/{{apt.id}}">   Delete    </a>    <a href="belt_app/editpage/{{apt.id}}">    Edit    </a></th>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+    <h3> Your other appointments </h3>
+    <table>
+      <tr>
+        <th> Tasks </th>
+        <th> Date </th>
+        <th> Time </th>
+      </tr>
+      {% for apt in apts %}
+        {% if apt not in today%}
+        <tr>
+          <th> {{apt.task}} </th>
+          <th> {{apt.date}} </th>
+          <th> {{apt.time}} </th>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table>
+    <h2> Add Appointment </h2>
+    <form class="" action="belt_app/createapt" method="post">
+      {% csrf_token %}
+      Date:<input type="text" name="aptdate" value="">
+      Time:<input type="time" name="apttime" value="">
+      Task: <input type="text" name="task" value="">
+      <input type="submit" name="" value="Add">
+    </form>
+  </body>
+</html>
